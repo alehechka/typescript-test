@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "yt-react-redux-app"
+  },
+  "targets": {
+    "yt-react-redux-app": {
+      "hosting": {
+        "type-script": [
+          "typescript-ea26b"
+        ]
+      }
+    }
+  }
+}
