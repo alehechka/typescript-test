@@ -7,5 +7,5 @@ test('Project summary renders', () => {
         <ProjectSummary project={{title:"", content:""}}/>
     );
     let tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
+    expect(tree).toMatchObject
 })
