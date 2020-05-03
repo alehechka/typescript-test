@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect, RootStateOrAny } from "react-redux";
 import { signIn } from "../../store/actions/authActions";
 import { Redirect } from "react-router-dom";
 import CredentialsModel from '../../models/Credentials';
+import { useForm } from "react-hook-form";
 
 interface Props {
   authError: string,
@@ -10,52 +11,52 @@ interface Props {
   signIn: (creds: CredentialsModel) => any
 }
 
-export class SignIn extends Component<Props> {
-  state: CredentialsModel = {
-    email: "",
-    password: "",
-    firstName: "",
-    lastName: ""
+export const SignIn = (props: Props) => {
+
+  const { handleSubmit, register, errors, formState } = useForm<CredentialsModel>({ mode: "onChange" });
+
+  const onSubmit = (values: CredentialsModel) => {
+    props.signIn(values);
   };
 
-  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      [e.target.id]: e.target.value,
-    });
-  };
-
-  handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    this.props.signIn(this.state);
-    console.log(this.state)
-  };
-
-  render() {
-    if (this.props.auth.uid) {
-      return <Redirect to="/" />
-    }
-    return (
-      <div className="container">
-        <form className="white" onSubmit={this.handleSubmit}>
-          <h5 className="grey-text text-darken-3">Sign In</h5>
-          <div className="input-field">
-            <label htmlFor="email">Email</label>
-            <input type="email" id="email" onChange={this.handleChange} />
-          </div>
-          <div className="input-field">
-            <label htmlFor="password">Password</label>
-            <input type="password" id="password" onChange={this.handleChange} />
-          </div>
-          <div className="input-field">
-            <button className="btn pink lighten-1 z-depth-0">Login</button>
-            <div className="red-text center">
-              {this.props.authError && <p>{this.props.authError}</p>}
-            </div>
-          </div>
-        </form>
-      </div>
-    );
+  if (props.auth.uid) {
+    return <Redirect to="/" />
   }
+  return (
+    <div className="container">
+      <form className="white" onSubmit={handleSubmit(onSubmit)}>
+        <h5 className="grey-text text-darken-3">Sign In</h5>
+        <div className="input-field">
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            ref={register({
+              required: true, pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                message: "invalid email address"
+              }
+            })} />
+          {errors.email && errors.email.message}
+        </div>
+        <div className="input-field">
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            ref={register({ required: true })} />
+        </div>
+        <div className="input-field">
+          <button type="submit" disabled={!formState.isValid} className="btn pink lighten-1 z-depth-0">Login</button>
+          <div className="red-text center">
+            {props.authError && <p>{props.authError}</p>}
+          </div>
+        </div>
+      </form>
+    </div>
+  );
 }
 
 const mapStateToProps = (state: RootStateOrAny) => {
