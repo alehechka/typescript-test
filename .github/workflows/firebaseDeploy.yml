@@ -32,9 +32,15 @@ jobs:
         with:
           name: build
           path: build
+      - name: Access Functions Directory
+        run: cd functions
+      - name: Install Functions Dependencies
+        run: npm install
+      - name: Return to Head Directory
+        run: cd ..
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting
+          args: deploy -P prod
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
