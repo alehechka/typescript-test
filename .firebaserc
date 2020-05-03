@@ -1,6 +1,8 @@
 {
   "projects": {
-    "default": "yt-react-redux-app"
+    "default": "yt-react-redux-dev",
+    "dev": "yt-react-redux-dev",
+    "prod": "yt-react-redux-app"
   },
   "targets": {
     "yt-react-redux-app": {
