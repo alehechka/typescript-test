@@ -10,7 +10,6 @@ interface Props {
 }
 
 const ProjectDetails = ({ project }: Props) => {
-  console.log(project)
   if (project) {
     return (
       <div className="container section project-details">
