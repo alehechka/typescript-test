@@ -5,25 +5,30 @@ export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_ERROR = 'SIGNUP_ERROR';
 
 interface LoginAction {
-    type: typeof LOGIN_SUCCESS,
+	type: typeof LOGIN_SUCCESS;
 }
 
 interface LoginActionError {
-    type: typeof LOGIN_ERROR,
-    err: Error
+	type: typeof LOGIN_ERROR;
+	err: Error;
 }
 
 interface SignoutAction {
-    type: typeof SIGNOUT_SUCCESS,
+	type: typeof SIGNOUT_SUCCESS;
 }
 
 interface SignupAction {
-    type: typeof SIGNUP_SUCCESS,
+	type: typeof SIGNUP_SUCCESS;
 }
 
 interface SignupActionError {
-    type: typeof SIGNUP_ERROR,
-    err: Error
+	type: typeof SIGNUP_ERROR;
+	err: Error;
 }
 
-export type AuthActionTypes = LoginAction | LoginActionError | SignoutAction | SignupAction | SignupActionError;
+export type AuthActionTypes =
+	| LoginAction
+	| LoginActionError
+	| SignoutAction
+	| SignupAction
+	| SignupActionError;
